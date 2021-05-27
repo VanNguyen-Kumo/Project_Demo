@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Webpatser\Uuid\Uuid;
 
 class Order extends Model
@@ -26,7 +27,10 @@ class Order extends Model
         return Uuid::generate();
     }
     public function users(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class,'user_id');
     }
-
+    public static function getOrder(){
+        $records=DB::table('order')->select('total_price', 'total_quantity','delivery_date','status')->get()->toArray();
+        return $records;
+    }
 }

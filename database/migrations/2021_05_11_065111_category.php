@@ -18,7 +18,8 @@ class Category extends Migration
             $table->string('name')->unique();
             $table->string('image_url')->nullable();
             $table->softDeletes('is_active')->nullable();
-            $table->string('parent_category_id',36)->default('0');
+            $table->char('parent_category_id',36);
+            $table->foreign('parent_category_id')->references('id')->on('categories')->onDelete ('cascade')->onUpdate('cascade');
             $table->primary('id');
             $table->timestamps();
         });
