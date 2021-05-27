@@ -20,7 +20,7 @@ class CategoryController extends Controller
                     ->with('subcategory.products');
             }])->with('products')
             ->withCount(['subcategory', 'products'])->orderBy('name','asc')
-            ->get();
+            ->where('name', 'LIKE', '%' . request('keyword') . '%')->get();
         foreach ($cates as $cate){
             if($cate['subcategory_count']>0){
                 $count=0;
@@ -30,7 +30,9 @@ class CategoryController extends Controller
                 $cate->products_count+=$count;
             }
         }
-        return response()->json($cates);
+        return response()->json([
+            'data'=>$cates
+        ]);
     }
 
     public function store(CategoryRequest $request)
@@ -54,13 +56,17 @@ class CategoryController extends Controller
             ]);
         }
         toast('Category create success', 'success', 'top-right');
-        return response()->json($cate);
+        return response()->json([
+            'data'=>$cate
+        ]);
     }
 
     public function show($id)
     {
-        $cate = Category::with('products')->where('id', $id)->first();
-        return response()->json($cate);
+        $cates = Category::with('products')->where('id', $id)->first();
+        return response()->json([
+            'data'=>$cates
+        ]);
     }
 
     public function update(UpdateCategoryRequest $request, $id)
