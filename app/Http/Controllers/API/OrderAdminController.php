@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class OrderAdminController extends Controller
 {
     public function index(){
-        $order=Order::with('users')->get();
+        $order=Order::query()->where('delivery_date', 'LIKE', '%' . request('keyword') . '%')->with('users')->orderBy('created_at')->get();
         return response()->json(['data'=>$order]);
     }
     public function show($id){
