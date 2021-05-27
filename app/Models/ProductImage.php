@@ -26,6 +26,6 @@ class ProductImage extends Model
         return Uuid::generate();
     }
     public function products(){
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class,'product_id');
     }
 }
