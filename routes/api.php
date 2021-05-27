@@ -8,6 +8,7 @@ use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\ProductController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -54,9 +55,31 @@ Route::group([
     'namespace' => 'API',
     'middleware' => 'auth',
 ], function () {
-    Route::get('index',[CategoryController::class,'index']);
+
     Route::delete('destroy/{id}', [CategoryController::class,'destroy']);
     Route::get('show/{id}',[CategoryController::class,'show']);
     Route::post('store', [CategoryController::class,'store']);
     Route::put('update/{id}',[CategoryController::class,'update']);
 });
+
+Route::group([
+    'prefix'=>'admin/product',
+    'namespace' => 'API',
+    'middleware' => 'auth',
+], function () {
+
+    Route::delete('destroy/{id}', [ProductController::class,'destroy']);
+    Route::get('show/{id}',[ProductController::class,'show']);
+    Route::post('store', [ProductController::class,'store']);
+    Route::put('update/{id}',[ProductController::class,'update']);
+});
+
+Route::group([
+    'prefix'=>'home',
+    'namespace' => 'API',
+    'middleware' => 'auth:user',
+], function () {
+    Route::get('index',[ProductController::class,'index']);
+    Route::get('index',[CategoryController::class,'index']);
+});
+
