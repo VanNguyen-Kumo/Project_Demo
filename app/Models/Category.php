@@ -26,9 +26,10 @@ class Category extends Model
         return Uuid::generate();
     }
     public function subcategory(){
-        return $this->hasMany(Category::class,'parent_category_id');
+        return $this->hasMany(__CLASS__,'parent_category_id')->with('subcategory');
     }
     public function products(){
         return $this->hasMany(Product::class);
     }
+
 }
