@@ -9,6 +9,7 @@ use App\Http\Controllers\API;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\ProductImageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -67,7 +68,7 @@ Route::group([
     'namespace' => 'API',
     'middleware' => 'auth',
 ], function () {
-
+    Route::post('import_csv', [ProductController::class,'importCSV']);
     Route::delete('destroy/{id}', [ProductController::class,'destroy']);
     Route::get('show/{id}',[ProductController::class,'show']);
     Route::post('store', [ProductController::class,'store']);
@@ -75,11 +76,23 @@ Route::group([
 });
 
 Route::group([
+    'prefix'=>'admin/product/images',
+    'namespace' => 'API',
+    'middleware' => 'auth',
+], function () {
+    Route::get('index',[ProductImageController::class,'index']);
+    Route::delete('destroy/{id}', [ProductImageController::class,'destroy']);
+    Route::get('show/{id}',[ProductImageController::class,'show']);
+    Route::post('store', [ProductImageController::class,'store']);
+    Route::put('update/{id}',[ProductImageController::class,'update']);
+});
+
+Route::group([
     'prefix'=>'home',
     'namespace' => 'API',
-    'middleware' => 'auth:user',
+    'middleware' => 'auth',
 ], function () {
-    Route::get('index',[ProductController::class,'index']);
-    Route::get('index',[CategoryController::class,'index']);
+    Route::get('product/index',[ProductController::class,'index']);
+    Route::get('category/index',[CategoryController::class,'index']);
 });
 

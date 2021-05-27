@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Webpatser\Uuid\Uuid;
 
 class Product extends Model
@@ -34,4 +35,5 @@ class Product extends Model
     public function categories(){
         return $this->belongsTo(Category::class,'category_id');
     }
+
 }
