@@ -52,7 +52,7 @@ return [
             'hash' => false,
         ],
         'user'=>[
-            'driver' => 'session',
+            'driver' => 'jwt',
             'provider' => 'users',
             'hash' => false,
         ],

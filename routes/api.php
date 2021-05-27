@@ -22,9 +22,7 @@ use App\Http\Controllers\API\ProductImageController;
 */
 
 Route::post('admin/login', [API\AdminLoginControler::class,'login']);
-Route::post('home/login', [API\UserController::class,'login']);
-Route::post('home/logout', [API\UserController::class,'logout']);
-
+Route::post('home/user/login', [API\UserController::class,'login']);
 
 Route::group([
     'prefix'=>'admin',
@@ -46,9 +44,7 @@ Route::group([
 ], function () {
     Route::get('index',[UserController::class,'index']);
     Route::delete('destroy/{id}', [UserController::class,'destroy']);
-    Route::get('show/{id}',[UserController::class,'show']);
-    Route::post('store', [UserController::class,'store']);
-    Route::put('update/{id}',[UserController::class,'update']);
+
 });
 
 Route::group([
@@ -90,9 +86,18 @@ Route::group([
 Route::group([
     'prefix'=>'home',
     'namespace' => 'API',
-    'middleware' => 'auth',
 ], function () {
     Route::get('product/index',[ProductController::class,'index']);
     Route::get('category/index',[CategoryController::class,'index']);
 });
 
+Route::group([
+    'prefix'=>'home/user',
+    'namespace' => 'API',
+    'middleware' => 'auth:user',
+], function () {
+    Route::get('show/{id}',[UserController::class,'show']);
+    Route::post('store', [UserController::class,'store']);
+    Route::put('update/{id}',[UserController::class,'update']);
+    Route::post('logout', [UserController::class,'logout']);
+});
