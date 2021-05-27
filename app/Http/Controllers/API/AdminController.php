@@ -13,7 +13,7 @@ class AdminController extends Controller
     public function index()
     {
 
-        $admin = Admin::query()->where('username', 'LIKE', '%' . request('keyword') . '%')->paginate(config('constants.paginate'));
+        $admin = Admin::query()->where('username', 'LIKE', '%' . request('keyword') . '%');
         return  response()->json($admin);
     }
 
