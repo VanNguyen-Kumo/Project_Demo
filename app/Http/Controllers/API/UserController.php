@@ -24,7 +24,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = User::query()->where('email_address', 'LIKE', '%' . request('keyword') . '%')->paginate(config('constants.paginate'));
+        $user = User::query()->where('email_address', 'LIKE', '%' . request('keyword') . '%')->orderBy('username');
         return response()->json($user);
     }
 
