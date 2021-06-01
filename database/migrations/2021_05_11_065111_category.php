@@ -23,6 +23,7 @@ class Category extends Migration
             $table->primary('id');
             $table->timestamps();
         });
+
     }
 
     /**

@@ -13,6 +13,7 @@ class Product extends Migration
      */
     public function up()
     {
+
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('name')->unique();

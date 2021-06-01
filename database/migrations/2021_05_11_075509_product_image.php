@@ -23,6 +23,8 @@ class ProductImage extends Migration
         });
     }
 
+    
+
     /**
      * Reverse the migrations.
      *
