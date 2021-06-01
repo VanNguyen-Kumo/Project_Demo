@@ -1,3 +1,7 @@
 *
 !public/
+<<<<<<< HEAD
 !.gitignore
+=======
+!.gitignore
+>>>>>>> #7-OrderUser

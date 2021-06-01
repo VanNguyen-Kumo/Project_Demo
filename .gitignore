@@ -5,9 +5,13 @@
 /vendor
 .env
 .env.backup
+<<<<<<< HEAD
 .idea
 .phpunit.result.cache
 docker-compose.override.yml
+=======
+.phpunit.result.cache
+>>>>>>> #7-OrderUser
 Homestead.json
 Homestead.yaml
 npm-debug.log

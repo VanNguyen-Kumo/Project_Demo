@@ -12,7 +12,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-
+        dd('aaaaaaa');
         $admin = Admin::query()->where('username', 'LIKE', '%' . request('keyword') . '%');
         return  response()->json($admin);
     }

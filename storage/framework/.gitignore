@@ -6,4 +6,8 @@ maintenance.php
 routes.php
 routes.scanned.php
 schedule-*
+<<<<<<< HEAD
 services.json
+=======
+services.json
+>>>>>>> #7-OrderUser

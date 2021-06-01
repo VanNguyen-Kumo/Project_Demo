@@ -10,7 +10,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:RABPpw7XpjK3NNTCW4h9eY62Qv7J0UMPUL3YF6yrASg=',
+    'key' => '',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -116,7 +116,7 @@
       ),
       'user' => 
       array (
-        'driver' => 'session',
+        'driver' => 'jwt',
         'provider' => 'users',
         'hash' => false,
       ),
@@ -637,11 +637,11 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'smtp.mailtrap.io',
-        'port' => '2525',
-        'encryption' => NULL,
-        'username' => NULL,
-        'password' => NULL,
+        'host' => 'smtp.gmail.com',
+        'port' => '465',
+        'encryption' => 'ssl',
+        'username' => 'shopmart1998@gmail.com',
+        'password' => 'sonevel98',
         'timeout' => NULL,
         'auth_mode' => NULL,
       ),
@@ -674,7 +674,7 @@
     ),
     'from' => 
     array (
-      'address' => NULL,
+      'address' => 'shopmart1998@gmail.com',
       'name' => 'Laravel',
     ),
     'markdown' => 
@@ -838,7 +838,7 @@
     array (
       'enable' => false,
     ),
-    'animatecss' => 'https://cdn.jsdelivr.net/npm/animate.css',
+    'animatecss' => 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css',
     'show_confirm_button' => true,
     'show_close_button' => false,
     'toast_position' => 'top-end',

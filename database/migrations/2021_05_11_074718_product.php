@@ -19,7 +19,7 @@ class Product extends Migration
             $table->integer('price');
             $table->string('description')->nullable();
             $table->integer('quantity');
-            $table->uuid('category_id');
+            $table->uuid('category_id')->nullable();
             $table->softDeletes('is_active')->nullable();
             $table->primary('id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete ('cascade')->onUpdate('cascade');

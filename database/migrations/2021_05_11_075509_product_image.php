@@ -16,7 +16,7 @@ class ProductImage extends Migration
         Schema::create('porduct_images', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('image_url')->nullable();
-            $table->uuid('product_id');
+            $table->uuid('product_id')->nullable();
             $table->primary('id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete ('cascade')->onUpdate('cascade');
             $table->timestamps();
