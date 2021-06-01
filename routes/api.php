@@ -23,7 +23,7 @@ use App\Http\Controllers\API\ProductImageController;
 
 Route::post('admin/login', [API\AdminLoginControler::class,'login']);
 Route::post('home/user/login', [API\UserController::class,'login']);
-
+Route::post('home/user/register', [API\UserController::class,'create']);
 Route::group([
     'prefix'=>'admin',
     'middleware' => 'auth',
