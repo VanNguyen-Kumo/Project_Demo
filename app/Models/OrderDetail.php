@@ -12,7 +12,7 @@ class OrderDetail extends Model
     public $incrementing = false;
     protected  $table= 'order_detail';
     protected $fillable = [
-        'quantity','price','order_id','product_id',
+        'quantity','price','order_id','product_id','image_url',
     ];
     public static function boot()
     {
@@ -24,5 +24,8 @@ class OrderDetail extends Model
     public static function generateUuid()
     {
         return Uuid::generate();
+    }
+    public function orders(){
+        return $this->belongsTo(Order::class,'order_id');
     }
 }
