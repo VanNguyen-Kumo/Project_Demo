@@ -13,7 +13,7 @@ class ProductImage extends Migration
      */
     public function up()
     {
-        Schema::create('porduct_images', function (Blueprint $table) {
+        Schema::create('product_images', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('image_url')->nullable();
             $table->uuid('product_id');
@@ -23,7 +23,7 @@ class ProductImage extends Migration
         });
     }
 
-    
+
 
     /**
      * Reverse the migrations.
