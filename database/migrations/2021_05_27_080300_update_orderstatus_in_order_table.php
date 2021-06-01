@@ -14,7 +14,7 @@ class UpdateOrderstatusInOrderTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->enum('status', OrderStatusType::getValues())
+            $table->integer('status', OrderStatusType::getValues())
                 ->default(OrderStatusType::WaitForConfirmation)->change();
         });
     }
