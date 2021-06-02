@@ -15,7 +15,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
+        $product=Product::with('categories')->with('images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
         $category=Category::whereNull('parent_category_id')->with('products.images')->orderBy('name')->get();
         if(\request()->file('sort')===null){
             $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
@@ -26,7 +26,7 @@ class ProductController extends Controller
         }elseif(\request()->file('sort')==='created_at'){
             $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('created_at')->get();
         }
- 
+
         return response()->json(['data'=>$product,'data_category'=>$category]);
     }
 
