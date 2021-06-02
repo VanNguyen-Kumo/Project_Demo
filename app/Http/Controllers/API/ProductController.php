@@ -19,7 +19,8 @@ class ProductController extends Controller
             'categories'=>function($query){
                     $query->select('*');
             }
-        ])->orderBy('name')->get();
+        ])
+           ->get();
         $category=Category::whereNull('parent_category_id')->with('products.images')->orderBy('name')->get();
 //        if(\request()->file('sort')===null){
 //            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
