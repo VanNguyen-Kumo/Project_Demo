@@ -22,7 +22,7 @@ class ProductController extends Controller
             'images'=>function($query){
                 $query->select('*')->from('product_images');
             }
-        ])->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
+        ])->orderBy('name')->get();
         $category=Category::whereNull('parent_category_id')->with([
             'products'=>function($query){
                 $query->select('*')->from('products');
