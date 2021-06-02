@@ -17,12 +17,12 @@ class ProductController extends Controller
     {
         $product=Product::with([
             'categories'=>function($query){
-                $query->select('*')->from('categories');
+                $query->select('*')->from('categories')->get();
             },
             'images'=>function($query){
-                $query->select('*')->from('product_images');
+                $query->select('*')->from('product_images')->get();
             }
-        ])->from('categories')->from('product_images')->get();
+        ]);
 //        $category=Category::whereNull('parent_category_id')->with([
 //            'products'=>function($query){
 //                $query->select('*')->from('products');
