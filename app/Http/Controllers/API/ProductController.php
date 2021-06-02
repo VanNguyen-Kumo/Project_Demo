@@ -22,15 +22,15 @@ class ProductController extends Controller
             'images'=>function($query){
                 $query->select('*')->from('product_images');
             }
-        ]);
-        $category=Category::whereNull('parent_category_id')->with([
-            'products'=>function($query){
-                $query->select('*')->from('products');
-            },
-            'images'=>function($query){
-                $query->select('*')->from('product_images');
-            }
-            ]);
+        ])->from('categories')->from('product_images')->get();
+//        $category=Category::whereNull('parent_category_id')->with([
+//            'products'=>function($query){
+//                $query->select('*')->from('products');
+//            },
+//            'images'=>function($query){
+//                $query->select('*')->from('product_images');
+//            }
+//            ]);
 //        if(\request()->file('sort')===null){
 //            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
 //        }elseif (\request()->file('sort')==='asc'){
@@ -41,7 +41,7 @@ class ProductController extends Controller
 //            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('created_at')->get();
 //        }
 
-        return response()->json(['data'=>$product,'data_category'=>$category]);
+        return response()->json(['data'=>$product]);
     }
 
     public function store(ProductRequest $request)
