@@ -10,6 +10,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\ProductImageController;
+use App\Http\Controllers\API\OrderUserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -100,4 +101,16 @@ Route::group([
     Route::post('store', [UserController::class,'store']);
     Route::put('update/{id}',[UserController::class,'update']);
     Route::post('logout', [UserController::class,'logout']);
+    Route::get('checkout',[OrderUserController::class,'checkout']);
+});
+
+Route::group([
+    'prefix'=>'home/user/cart',
+    'namespace' => 'API',
+    'middleware' => 'auth:user',
+], function () {
+    Route::get('index', [OrderUserController::class,'index']);
+    Route::get('checkout',[OrderUserController::class,'checkout']);
+    Route::post('store',[OrderUserController::class,'store']);
+    Route::post('cancel',[OrderUserController::class,'cancel']);
 });

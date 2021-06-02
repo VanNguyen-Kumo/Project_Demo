@@ -18,11 +18,8 @@ class AdminLoginControler extends Controller
             'username' => $request['username'],
             'password' => bcrypt($request['password']),
         ]);
-        toast('Register success','success','top-right');
-
         return response()->json([
-            'status'=> 200,
-            'message'=> 'admin created successfully',
+            'message'=> 'Admin created successfully',
             'data'=>$admin
         ]);
     }
@@ -50,6 +47,6 @@ class AdminLoginControler extends Controller
     {
         auth()->logout(true);
         toast('Logout success','success','top-right');
-        return response()->json('Logout success');
+        return response()->json(['message'=>'Logout success']);
     }
 }

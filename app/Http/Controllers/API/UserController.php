@@ -91,14 +91,14 @@ class UserController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 3600,
+            'message'=>'Login success'
         ]);
     }
 
     public function logout(Request $request)
     {
         auth('web')->logout(true);
-        toast('Logout success', 'success', 'top-right');
-        return response()->json('Logout success');
+        return response()->json(['message'=>'Logout success']);
     }
 }

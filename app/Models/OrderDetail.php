@@ -10,9 +10,9 @@ class OrderDetail extends Model
 {
     use HasFactory;
     public $incrementing = false;
-    protected  $table= 'order_detail';
+    protected  $table= 'order_details';
     protected $fillable = [
-        'quantity','price','order_id','product_id',
+        'quantity','price','order_id','product_id'
     ];
     public static function boot()
     {
@@ -24,5 +24,8 @@ class OrderDetail extends Model
     public static function generateUuid()
     {
         return Uuid::generate();
+    }
+    public function orders(){
+        return $this->belongsTo(Order::class,'order_id');
     }
 }

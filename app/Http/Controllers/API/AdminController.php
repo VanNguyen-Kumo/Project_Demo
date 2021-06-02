@@ -14,7 +14,7 @@ class AdminController extends Controller
     {
 
         $admin = Admin::query()->where('username', 'LIKE', '%' . request('keyword') . '%');
-        return  response()->json($admin);
+        return  response()->json(['data'=>$admin,'message'=>'Login success']);
     }
 
     public function store(AdminRequest $request)
@@ -23,9 +23,8 @@ class AdminController extends Controller
             'username' => $request['username'],
             'password' => bcrypt($request['password']),
         ]);
-        toast('Register success','success','top-right');
         return response()->json([
-            'message'=> 'admin register successfully',
+            'message'=> 'Admin register successfully',
             'data'=>$admin
         ]);
     }
@@ -33,7 +32,7 @@ class AdminController extends Controller
     public function show($id)
     {
         $admin=Admin::where('id',$id)->first();
-        return response()->json($admin);
+        return response()->json(['data'=>$admin]);
     }
 
     public function update(AdminRequest $request, $id)
@@ -41,7 +40,6 @@ class AdminController extends Controller
         $params = $request->validated();
         $params['password'] = bcrypt($params['password']);
         Admin::where('id',$id)->update($params);
-        toast('Update success','success','top-right');
         return response()->json( [
             'message'=> 'admin update successfully',
             'data'=>$params
@@ -50,8 +48,8 @@ class AdminController extends Controller
 
     public function destroy($id)
     {
-        toast('Delete success','success','top-right');
+
         Admin::query()->where('id',$id)->delete();
-        return response()->json( 'admin delete successfully');
+        return response()->json( ['message'=>'admin delete successfully']);
     }
 }

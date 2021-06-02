@@ -13,7 +13,7 @@ class Order extends Model
     public $incrementing = false;
     protected  $table= 'Orders';
     protected $fillable = [
-       'total_price','total_quantity','delivery_address','delivery_date','phone','status'
+       'total_price','total_quantity','delivery_address','delivery_date','phone','status','user_id'
     ];
     public static function boot()
     {
@@ -32,5 +32,8 @@ class Order extends Model
     public static function getOrder(){
         $records=DB::table('order')->select('total_price', 'total_quantity','delivery_date','status')->get()->toArray();
         return $records;
+    }
+    public function order_detail(){
+        return $this->hasMany(OrderDetail::class);
     }
 }
