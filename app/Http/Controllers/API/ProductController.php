@@ -15,33 +15,18 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $product=Product::with([
-            'categories'=>function($query){
-                $query->select('*')->from('categories')->get();
-            },
-            'images'=>function($query){
-                $query->select('*')->from('product_images')->get();
-            }
-        ]);
-//        $category=Category::whereNull('parent_category_id')->with([
-//            'products'=>function($query){
-//                $query->select('*')->from('products');
-//            },
-//            'images'=>function($query){
-//                $query->select('*')->from('product_images');
-//            }
-//            ]);
-//        if(\request()->file('sort')===null){
-//            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
-//        }elseif (\request()->file('sort')==='asc'){
-//            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('price')->get();
-//        }elseif (\request()->file('sort')==='desc'){
-//            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('price','desc')->get();
-//        }elseif(\request()->file('sort')==='created_at'){
-//            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('created_at')->get();
-//        }
+        $category=Category::whereNull('parent_category_id')->with('products.images')->orderBy('name')->get();
+        if(\request()->file('sort')===null){
+            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
+        }elseif (\request()->file('sort')==='asc'){
+            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('price')->get();
+        }elseif (\request()->file('sort')==='desc'){
+            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('price','desc')->get();
+        }elseif(\request()->file('sort')==='created_at'){
+            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('created_at')->get();
+        }
 
-        return response()->json(['data'=>$product]);
+        return response()->json(['data'=>$product,'data_category'=>$category]);
     }
 
     public function store(ProductRequest $request)
