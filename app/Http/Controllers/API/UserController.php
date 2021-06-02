@@ -35,7 +35,10 @@ class UserController extends Controller
             'password' => bcrypt($request['password']),
         ]);
         toast('Register User Success', 'success', 'top-right');
-        return response()->json($user);
+        return response()->json([
+            'data'=>$user,
+            'message'=>'Register success'
+        ]);
 
     }
 
