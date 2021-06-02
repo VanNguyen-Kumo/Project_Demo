@@ -22,7 +22,7 @@ class ProductController extends Controller
             'images'=>function($query){
                 $query->select('*')->from('product_images');
             }
-        ])->get();
+        ]);
         $category=Category::whereNull('parent_category_id')->with([
             'products'=>function($query){
                 $query->select('*')->from('products');
@@ -30,7 +30,7 @@ class ProductController extends Controller
             'images'=>function($query){
                 $query->select('*')->from('product_images');
             }
-            ])->get();
+            ]);
 //        if(\request()->file('sort')===null){
 //            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
 //        }elseif (\request()->file('sort')==='asc'){
