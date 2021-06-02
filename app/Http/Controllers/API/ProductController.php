@@ -17,10 +17,20 @@ class ProductController extends Controller
     {
         $product=Product::with([
             'categories'=>function($query){
-                    $query->select('*');
+                $query->select('*')->from('categories');
+            },
+            'images'=>function($query){
+                $query->select('*')->from('product_images');
             }
-        ])->from('categories')->get();
-        $category=Category::whereNull('parent_category_id')->with('products.images')->orderBy('name')->get();
+        ])->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
+        $category=Category::whereNull('parent_category_id')->with([
+            'products'=>function($query){
+                $query->select('*')->from('products');
+            },
+            'images'=>function($query){
+                $query->select('*')->from('product_images');
+            }
+            ])->orderBy('name')->get();
 //        if(\request()->file('sort')===null){
 //            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
 //        }elseif (\request()->file('sort')==='asc'){
