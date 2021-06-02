@@ -15,7 +15,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $product=Product::with(['categories','images'])->where('name', 'like', '%' . request('keyword') . '%')->orderBy('name')->get();
+        $product=Product::where('name', 'like', '%' . request('keyword') . '%')->orderBy('name')->get();
         $category=Category::whereNull('parent_category_id')->with('products.images')->orderBy('name')->get();
         if(\request()->file('sort')===null){
             $product=Product::with('categories','images')->where('name', 'like', '%' . request('keyword') . '%')->orderBy('name')->get();
