@@ -15,16 +15,16 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $product=Product::with(['categories','images'])->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
+        $product=Product::with(['categories','images'])->where('name', 'like', '%' . request('keyword') . '%')->orderBy('name')->get();
         $category=Category::whereNull('parent_category_id')->with('products.images')->orderBy('name')->get();
         if(\request()->file('sort')===null){
-            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
+            $product=Product::with('categories','images')->where('name', 'like', '%' . request('keyword') . '%')->orderBy('name')->get();
         }elseif (\request()->file('sort')==='asc'){
-            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('price')->get();
+            $product=Product::with('categories','images')->where('name', 'like', '%' . request('keyword') . '%')->orderBy('price')->get();
         }elseif (\request()->file('sort')==='desc'){
-            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('price','desc')->get();
+            $product=Product::with('categories','images')->where('name', 'like', '%' . request('keyword') . '%')->orderBy('price','desc')->get();
         }elseif(\request()->file('sort')==='created_at'){
-            $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('created_at')->get();
+            $product=Product::with('categories','images')->where('name', 'like', '%' . request('keyword') . '%')->orderBy('created_at')->get();
         }
 
         return response()->json(['data'=>$product,'data_category'=>$category]);
