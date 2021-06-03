@@ -26,13 +26,13 @@ class UpdateOrderAdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => ['required', new EnumValue(OrderStatusType::class)],
+            'status_id' => ['required', new EnumValue(OrderStatusType::class)],
         ];
     }
     public function messages()
     {
         return [
-            'status.required' => 'can not be empty',
+            'status_id.required' => 'can not be empty',
         ];
     }
 

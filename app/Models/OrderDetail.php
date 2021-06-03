@@ -12,7 +12,11 @@ class OrderDetail extends Model
     public $incrementing = false;
     protected  $table= 'order_details';
     protected $fillable = [
+<<<<<<< HEAD
         'quantity','price','order_id','product_id'
+=======
+        'quantity','price','order_id','product_id','image_url',
+>>>>>>> #6-User
     ];
     public static function boot()
     {

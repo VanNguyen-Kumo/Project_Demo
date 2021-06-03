@@ -11,11 +11,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
+
     public $incrementing = false;
 
-    protected  $table= 'users';
+    protected $table = 'users';
     protected $fillable = [
-        'first_name','last_name','display_name', 'email_address', 'password','image_url','phone','address'
+        'first_name', 'last_name', 'display_name', 'email_address', 'password', 'image_url', 'phone', 'address'
     ];
 
     protected $hidden = [
@@ -25,21 +26,28 @@ class User extends Authenticatable implements JWTSubject
     public static function boot()
     {
         parent::boot();
-        self::creating(function($model){
+        self::creating(function ($model) {
             $model->id = (string)Uuid::generate();
         });
     }
+
     public static function generateUuid()
     {
         return Uuid::generate();
     }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
     }
+
     public function getJWTCustomClaims()
     {
         return [];
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
