@@ -15,7 +15,6 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $category=Category::whereNull('parent_category_id')->with('products.images')->orderBy('name')->get();
         if(\request()->file('sort')===null){
             $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('name')->get();
         }elseif (\request()->file('sort')==='asc'){
@@ -25,10 +24,6 @@ class ProductController extends Controller
         }elseif(\request()->file('sort')==='created_at'){
             $product=Product::with('categories','images')->where('name', 'LIKE', '%' . request('keyword') . '%')->orderBy('created_at')->get();
         }
-<<<<<<< HEAD
-
-        return response()->json(['data'=>$product,'data_category'=>$category]);
-=======
         foreach ($product as $products){
             if($products->categories->parent_category_id!==null){
                $cate= Category::query()->select('name')->where('id',$products->categories->parent_category_id)->first();
@@ -40,7 +35,6 @@ class ProductController extends Controller
     public function product_category(){
         $category=Category::whereNull('parent_category_id')->with('products.images')->orderBy('name')->get();
         return response()->json(['data_category'=>$category]);
->>>>>>> #6-User
     }
     public function store(ProductRequest $request)
     {

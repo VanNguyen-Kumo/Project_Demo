@@ -34,7 +34,6 @@ class OrderUserController extends Controller
     {
         $param = $request->validated();
          $user_id = auth('user')->id();
-         dd($user_id);
         $delivery_date = Carbon::now('Asia/Ho_Chi_Minh')->addDay(5)->toDayDateTimeString();
         $param['user_id'] = $user_id;
         $param['delivery_date'] = $delivery_date;

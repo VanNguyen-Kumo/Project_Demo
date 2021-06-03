@@ -11,24 +11,13 @@ use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\ProductImageController;
 use App\Http\Controllers\API\OrderUserController;
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\API\OrderAdminController;
->>>>>>> #6-User
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+
 
 Route::post('admin/login', [API\AdminLoginControler::class,'login']);
 Route::post('home/user/login', [API\UserController::class,'login']);
 Route::post('home/user/register', [API\UserController::class,'store']);
+
 Route::group([
     'prefix'=>'admin',
     'middleware' => 'auth',
@@ -49,7 +38,6 @@ Route::group([
 ], function () {
     Route::get('index',[UserController::class,'index']);
     Route::delete('destroy/{id}', [UserController::class,'destroy']);
-
 });
 
 Route::group([
@@ -106,7 +94,6 @@ Route::group([
     Route::post('store', [UserController::class,'store']);
     Route::put('update/{id}',[UserController::class,'update']);
     Route::post('logout', [UserController::class,'logout']);
-<<<<<<< HEAD
     Route::get('checkout',[OrderUserController::class,'checkout']);
 });
 
@@ -119,7 +106,7 @@ Route::group([
     Route::get('checkout',[OrderUserController::class,'checkout']);
     Route::post('store',[OrderUserController::class,'store']);
     Route::post('cancel',[OrderUserController::class,'cancel']);
-=======
+
     Route::get('order/index',[OrderUserController::class,'index']);
     Route::get('checkout',[OrderUserController::class,'checkout']);
     Route::post('order',[OrderUserController::class,'order']);
@@ -134,5 +121,5 @@ Route::group([
     Route::get('show/{id}',[OrderAdminController::class,'show']);
     Route::patch('update/{id}',[CategoryController::class,'update']);
     Route::get('exportCSV',[OrderAdminController::class,'exportCSV']);
->>>>>>> #6-User
+
 });

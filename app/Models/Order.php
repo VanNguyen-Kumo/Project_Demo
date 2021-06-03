@@ -33,19 +33,12 @@ class Order extends Model
         $records=DB::table('order')->select('total_price', 'total_quantity','delivery_date','status')->get()->toArray();
         return $records;
     }
-<<<<<<< HEAD
+
     public function order_detail(){
         return $this->hasMany(OrderDetail::class);
     }
     public function products(){
         return $this->belongsToMany(Product::class,'order_details','order_id','product_id');
     }
-=======
-    public function products(){
-        return $this->belongsToMany(Order::class,'order_details','order_id','product_id');
-    }
-    public function order_detail(){
-        return $this->hasMany(OrderDetail::class);
-    }
->>>>>>> #6-User
+
 }
