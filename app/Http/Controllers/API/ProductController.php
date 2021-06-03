@@ -38,7 +38,7 @@ class ProductController extends Controller
     }
     public function sub_category(){
         $category=Category::whereNotNull('parent_category_id')->with('products.images')->orderBy('name')->get();
-        return response()->json(['data_category'=>$category]);
+        return response()->json(['sub_category'=>$category]);
     }
     public function store(ProductRequest $request)
     {
