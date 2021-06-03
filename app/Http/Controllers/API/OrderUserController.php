@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enums\OrderStatusType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckOutRequest;
 use App\Http\Requests\UpdateOrderUserRequest;
@@ -32,22 +33,15 @@ class OrderUserController extends Controller
     public function store(CheckOutRequest $request)
     {
         $param = $request->validated();
-        $user_id = request()->user('user')->id;
+         $user_id = auth('user')->id();
+         dd($user_id);
         $delivery_date = Carbon::now('Asia/Ho_Chi_Minh')->addDay(5)->toDayDateTimeString();
         $param['user_id'] = $user_id;
         $param['delivery_date'] = $delivery_date;
         $order = Order::query()->create($param);
         $this->update_address_phone($user_id,$param);
         $detail=$request->input('order_detail');
-    //    $content=Cart::content();
 
-//        foreach ($content as $contents){
-//            $order_detail['quantity']=$contents->qty;
-//            $order_detail['price']=$contents->price;
-//            $order_detail['order_id']=$order->id;
-//            $order_detail['product_id']=$contents->id;
-//            $order_detail['image_url']=$contents->options->image_url;
-//        }
         foreach ($detail as $contents){
             $order_detail=new OrderDetail();
             $order_detail['quantity']=$contents['quantity'];
@@ -67,11 +61,8 @@ class OrderUserController extends Controller
     }
     public function cancel(UpdateOrderUserRequest $request, $id){
         $req=$request->validated();
-        if($req->status_id===0){
-            $req->status_id=4;
-
-        }
-        $order=Order::query()->where('id',$id)->update($req->status_id);
+        $req->status_id=OrderStatusType::Cancelled;
+        $order=Order::query()->where('id',$id)->update($req);
         return request()->json(['data'=>$order,'message'=>'Cancel done']);
     }
     public function update_address_phone($user_id,$param){
