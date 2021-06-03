@@ -23,9 +23,9 @@ class ProductImageController extends Controller
         Storage::disk('s3')->put('images/'.$filebath,file_get_contents($file));
         $product_image = ProductImage::create([
             'image_url' =>'https://project-demo-images.s3.amazonaws.com/images/'.$name,
-            'product_id' => $request->file('product_id'),
+            'product_id' => $request->product_id,
         ]);
-        toast('Product create success', 'success', 'top-right');
+        toast('Product image create success', 'success', 'top-right');
         return response()->json([
             'data'=>$product_image
         ]);

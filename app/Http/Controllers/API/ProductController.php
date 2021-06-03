@@ -44,7 +44,6 @@ class ProductController extends Controller
     {
         $req=$request->validated();
         $product=Product::query()->create($req);
-        toast('Category create success', 'success', 'top-right');
         return response()->json([
             'data'=>$product,
         ]);
@@ -61,7 +60,6 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, $id)
     {
         Product::query()->where('id',$id)->update($request->validated());
-            toast('Update product success', 'success', 'top-right');
             return response()->json([
                 'message'=>'Update product success'
             ]);
@@ -69,7 +67,6 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        toast('Delete product success', 'success', 'top-right');
         Product::query()->where('id', $id)->delete();
         return response()->json('Delete Product Success');
     }
@@ -77,7 +74,6 @@ class ProductController extends Controller
     {
         $path = request()->file('csv')->getRealPath();
         Excel::import(new ProductsImport(),$path);
-        toast('Import CSV success','success','top-right');
         return response()->json(['message'=>'Import Product Success']);
     }
 }

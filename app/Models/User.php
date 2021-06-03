@@ -13,7 +13,7 @@ class User extends Authenticatable implements JWTSubject
     use HasFactory, Notifiable;
 
     public $incrementing = false;
-
+    protected $keyType = 'string';
     protected $table = 'users';
     protected $fillable = [
         'first_name', 'last_name', 'display_name', 'email_address', 'password', 'image_url', 'phone', 'address'

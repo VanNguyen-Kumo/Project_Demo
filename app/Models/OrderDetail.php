@@ -10,6 +10,7 @@ class OrderDetail extends Model
 {
     use HasFactory;
     public $incrementing = false;
+    protected $keyType = 'string';
     protected  $table= 'order_details';
     protected $fillable = [
         'quantity','price','order_id','product_id','image_url',

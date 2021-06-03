@@ -10,6 +10,7 @@ class ProductImage extends Model
 {
     use HasFactory;
     public $incrementing = false;
+    protected $keyType = 'string';
     protected  $table= 'product_images';
     protected $fillable = [
         'image_url','product_id',
