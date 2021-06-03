@@ -96,7 +96,7 @@ class UserController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 3600,
             'message'=>'Login success',
-            'data'=>$credentials
+            'data'=>
         ]);
     }
 
