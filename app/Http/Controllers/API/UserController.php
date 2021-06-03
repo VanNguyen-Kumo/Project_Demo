@@ -86,17 +86,18 @@ class UserController extends Controller
         if (! $token = auth('user')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        return $this->respondWithToken($token);
+        $id=auth('user')->id();
+        return $this->respondWithToken($token,$id);
     }
 
-    protected function respondWithToken($token)
+    protected function respondWithToken($token,$id)
     {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 3600,
             'message'=>'Login success',
-            'data'=>\auth()->guard('user')->id,
+            'data'=>$id,
         ]);
     }
 
