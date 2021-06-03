@@ -10,6 +10,8 @@ class Category extends Model
 {
     use HasFactory;
     public $incrementing = false;
+   protected $keyType = 'string';
+
     protected  $table= 'categories';
     protected $fillable = [
         'name','image_url','is_active','parent_category_id',

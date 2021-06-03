@@ -11,6 +11,8 @@ class Product extends Model
 {
     use HasFactory;
     public $incrementing = false;
+    protected $keyType = 'string';
+
     protected  $table= 'products';
     protected $fillable = [
         'name','price','promotion_price','description','quantity','category_id','is_active',

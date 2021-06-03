@@ -34,7 +34,7 @@ class Order extends Model
         return $records;
     }
 
-    public function order_detail(){
+    public function order_details(){
         return $this->hasMany(OrderDetail::class);
     }
     public function products(){

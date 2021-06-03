@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enums\OrderStatusType;
 use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderAdminRequest;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 class OrderAdminController extends Controller
 {
     public function index(){
-        $order=Order::query()->where('delivery_date', 'LIKE', '%' . request('keyword') . '%')->with(['users','order_detail'])->orderBy('created_at')->get();
+        $order=Order::query()->where('delivery_date', 'LIKE', '%' . request('keyword') . '%')->with(['users','products'])->orderBy('created_at')->get();
         return response()->json(['data'=>$order]);
     }
     public function show($id){
@@ -27,5 +28,8 @@ class OrderAdminController extends Controller
     {
         toast('Export CSV success','success','top-right');
         return Excel::download(new OrderExport(), 'User.csv');
+    }
+    public function statistical(){
+        $statistical =Order::with('products')->where('status',OrderStatusType::Delivered)->select();
     }
 }

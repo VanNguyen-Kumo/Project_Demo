@@ -19,7 +19,7 @@ class OrderUserController extends Controller
     public function index()
     {
         $id = request()->user('user')->id;
-        $order = Order::query()->select('*')->where('user_id', $id)->orderBy('created_at')->with('order_detail')->get();
+        $order = Order::query()->select('*')->where('user_id', $id)->orderBy('created_at')->with('products')->get();
         return response()->json(['data' => $order]);
     }
 
