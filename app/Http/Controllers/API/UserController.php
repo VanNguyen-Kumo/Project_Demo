@@ -24,8 +24,10 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = User::query()->where('email_address', 'LIKE', '%' . request('keyword') . '%')->orderBy('username');
-        return response()->json($user);
+        $user = User::query()->where('email_address', 'LIKE', '%' . request('keyword') . '%')->orderBy('created_at')->get();
+        return response()->json([
+            'data'=>$user
+        ]);
     }
 
     public function store(UserRequest $request)

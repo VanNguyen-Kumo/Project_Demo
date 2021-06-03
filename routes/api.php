@@ -82,7 +82,9 @@ Route::group([
 ], function () {
     Route::get('product/index',[ProductController::class,'index']);
     Route::get('category/index',[CategoryController::class,'index']);
-    Route::get('product/product_category',[ProductController::class,'product_category']);
+    Route::get('data_category',[ProductController::class,'data_category']);
+    Route::get('sub_category',[ProductController::class,'sub_category']);
+
 });
 
 Route::group([
