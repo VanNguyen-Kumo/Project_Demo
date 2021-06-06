@@ -41,7 +41,7 @@ class AdminController extends Controller
         $params['password'] = bcrypt($params['password']);
         Admin::where('id',$id)->update($params);
         return response()->json( [
-            'message'=> 'admin update successfully',
+            'message'=> 'Admin update successfully',
             'data'=>$params
         ]);
     }
@@ -50,6 +50,6 @@ class AdminController extends Controller
     {
 
         Admin::query()->where('id',$id)->delete();
-        return response()->json( ['message'=>'admin delete successfully']);
+        return response()->json( ['message'=>'Admin delete successfully']);
     }
 }

@@ -19,7 +19,7 @@ class AdminLoginControler extends Controller
             'password' => bcrypt($request['password']),
         ]);
         return response()->json([
-            'message'=> 'Admin created successfully',
+            'message'=> 'Admin register successfully',
             'data'=>$admin
         ]);
     }
@@ -46,7 +46,6 @@ class AdminLoginControler extends Controller
     public function logout(Request $request)
     {
         auth()->logout(true);
-        toast('Logout success','success','top-right');
         return response()->json(['message'=>'Logout success']);
     }
 }

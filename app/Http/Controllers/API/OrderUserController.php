@@ -60,7 +60,7 @@ class OrderUserController extends Controller
     }
     public function cancel(UpdateOrderUserRequest $request, $id){
         $req=$request->validated();
-        $req->status_id=OrderStatusType::Cancelled;
+        $req->status_id=OrderStatusType::Cancelled();
         $order=Order::query()->where('id',$id)->update($req);
         return request()->json(['data'=>$order,'message'=>'Cancel done']);
     }

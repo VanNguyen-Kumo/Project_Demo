@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatusType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,7 @@ class Order extends Model
         return $this->belongsTo(User::class,'user_id');
     }
     public static function getOrder(){
-        $records=DB::table('order')->select('total_price', 'total_quantity','delivery_date','status')->get()->toArray();
+        $records=Order::with('order_details')->select('id','delivery_date','total_price','phone','user_id','status',)->where('status',OrderStatusType::Delivered())->get()->toArray();
         return $records;
     }
 

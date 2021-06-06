@@ -46,6 +46,7 @@ class ProductController extends Controller
         $product=Product::query()->create($req);
         return response()->json([
             'data'=>$product,
+            'message'=>'Create product success'
         ]);
     }
 

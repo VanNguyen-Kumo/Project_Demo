@@ -70,7 +70,7 @@ Route::group([
     'middleware' => 'auth',
 ], function () {
     Route::get('index',[ProductImageController::class,'index']);
-    Route::delete('destroy/{id}', [ProductImageController::class,'destroy']);
+    Route::delete('delete/{id}', [ProductImageController::class,'destroy']);
     Route::get('show/{id}',[ProductImageController::class,'show']);
     Route::post('store', [ProductImageController::class,'store']);
     Route::put('update/{id}',[ProductImageController::class,'update']);
@@ -81,9 +81,12 @@ Route::group([
     'namespace' => 'API',
 ], function () {
     Route::get('product/index',[ProductController::class,'index']);
+    Route::get('product/{id}',[ProductController::class,'show']);
     Route::get('category/index',[CategoryController::class,'index']);
     Route::get('data_category',[ProductController::class,'data_category']);
+    Route::get('data_category/{id}',[CategoryController::class,'show']);
     Route::get('sub_category',[ProductController::class,'sub_category']);
+    Route::get('sub_category/{id}',[CategoryController::class,'show']);
 
 });
 
@@ -122,6 +125,8 @@ Route::group([
     Route::get('index',[OrderAdminController::class,'index']);
     Route::get('show/{id}',[OrderAdminController::class,'show']);
     Route::patch('update/{id}',[CategoryController::class,'update']);
-    Route::get('exportCSV',[OrderAdminController::class,'exportCSV']);
+
+    Route::post('statistical',[OrderAdminController::class,'statistical']);
 
 });
+Route::get('exportCSV',[OrderAdminController::class,'exportCSV']);

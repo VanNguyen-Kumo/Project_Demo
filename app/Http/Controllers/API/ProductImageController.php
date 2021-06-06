@@ -25,14 +25,14 @@ class ProductImageController extends Controller
             'image_url' =>'https://project-demo-images.s3.amazonaws.com/images/'.$name,
             'product_id' => $request->product_id,
         ]);
-        toast('Product image create success', 'success', 'top-right');
         return response()->json([
-            'data'=>$product_image
+            'data'=>$product_image,
+            'message'=>'Create images success'
         ]);
     }
     public function show($id)
     {
-        $product_image=ProductImage::query()->find('id',$id)->first();
+        $product_image=ProductImage::query()->where('id', $id)->first();
         return response()->json([
             'data'=>$product_image
         ]);
@@ -47,15 +47,15 @@ class ProductImageController extends Controller
         $params = $request->validated();
         $params['image_url'] = 'https://project-demo-images.s3.amazonaws.com/images/'.$name;
         ProductImage::where('id', $id)->update($params);
-        toast('Product create success', 'success', 'top-right');
         return response()->json([
-            'data'=>$params
+            'data'=>$params,
+            'message'=>'Update images success'
         ]);
     }
 
     public function destroy($id)
     {
         ProductImage::query()->where('id', $id)->delete();
-        return response()->json('Delete Product Success');
+        return response()->json('Delete Images Success');
     }
 }

@@ -60,9 +60,8 @@ class UserController extends Controller
         $params['password'] = bcrypt($params['password']);
         $params['image_url'] = 'https://project-demo-images.s3.amazonaws.com/images/' . $name;
         User::where('id', $id)->update($params);
-        toast('Update success', 'success', 'top-right');
         return response()->json([
-            'message' => 'admin update successfully',
+            'message' => 'User update successfully',
             'data' => $params
         ]);
     }
@@ -86,7 +85,7 @@ class UserController extends Controller
 
         $credentials = $request->only($login_type, 'password');
         if (! $token = auth('user')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'invalid_username_or_password']);
         }
         $id=auth('user')->id();
         return $this->respondWithToken($token,$id);

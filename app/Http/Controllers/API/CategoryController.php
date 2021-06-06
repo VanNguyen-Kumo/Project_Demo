@@ -91,8 +91,7 @@ class CategoryController extends Controller
 //    }
     public function destroy($id)
     {
-        toast('Delete Category Success', 'success', 'top-right');
         Category::query()->where('id', $id)->delete();
-        return response()->json('Delete Category Success');
+        return response()->json(['data'=>'Delete Category Success']);
     }
 }
