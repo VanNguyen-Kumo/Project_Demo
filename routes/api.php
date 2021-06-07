@@ -97,7 +97,7 @@ Route::group([
 ], function () {
     Route::get('show',[UserController::class,'show']);
     Route::post('store', [UserController::class,'store']);
-    Route::put('update/{id}',[UserController::class,'update']);
+    Route::put('update',[UserController::class,'update']);
     Route::post('logout', [UserController::class,'logout']);
     Route::get('checkout',[OrderUserController::class,'checkout']);
 });
