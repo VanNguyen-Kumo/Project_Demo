@@ -81,7 +81,7 @@ Route::group([
     'namespace' => 'API',
 ], function () {
     Route::get('product/index',[ProductController::class,'index']);
-    Route::get('product/{id}',[ProductController::class,'show']);
+    Route::get('product/index/{id}',[ProductController::class,'show']);
     Route::get('category/index',[CategoryController::class,'index']);
     Route::get('data_category',[ProductController::class,'data_category']);
     Route::get('data_category/{id}',[CategoryController::class,'show']);

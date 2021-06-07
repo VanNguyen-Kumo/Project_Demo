@@ -7,8 +7,6 @@ use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderAdminRequest;
 use App\Models\Order;
-use App\Models\OrderDetail;
-use Illuminate\Http\Request;
 use Excel;
 
 class OrderAdminController extends Controller
@@ -40,17 +38,48 @@ class OrderAdminController extends Controller
 
     public function statistical()
     {
-        $order=[];
-        $statisticals=  Order::with('order_details')->select('*')->where('status', OrderStatusType::Delivered())->get()->toArray();
-        foreach ($statisticals as $statistical){
+        $order = [];
+        $count_quantity = [];
+        $statisticals = Order::with('order_details')->select('*')->where('status', OrderStatusType::Delivered())->get()->toArray();
+        foreach ($statisticals as $statistical) {
             foreach ($statistical['order_details'] as $sta) {
-//               if($sta['product_id']==='c0687640-b789-11eb-bc20-65f51afca8c5'){
-//                   array_push($order,$sta);
-//               }
-                echo $sta['product_id']."\n";
+                array_push($order, $sta);
             }
         }
-      //  dd($order);
+        $count = count($order);
+        $temp = 0;
+        for ($i = 0; $i < $count; $i++) {
+            for ($j = $i + 1; $j < $count; $j++) {
+                if ($order[$i]['product_id'] === $order[$j]['product_id']) {
+                    $order[$i]['quantity'] += $order[$j]['quantity'];
+                    $order[$i]['price'] += $order[$j]['price'];
+                    array_push($count_quantity, $order[$i]);
+                    $temp = 1;
+                }
+            }
+//            if($temp===0){
+//          //      array_push($count_quantity, $order[$i]);
+//                echo $order[$i]['id']."\n";
+//            }
         }
+        $test = $this->unique_multidim_array($order,'product_id');
+        sort($test);
+    }
+
+    function unique_multidim_array($array, $key)
+    {
+        $temp_array = array();
+        $i = 0;
+        $key_array = array();
+        foreach ($array as $val) {
+            if (!in_array($val[$key], $key_array, true)) {
+                $key_array[$i] = $val[$key];
+                $temp_array[$i] = $val;
+            }
+            $i++;
+        }
+        return $temp_array;
+    }
 
 }
+

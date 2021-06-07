@@ -32,7 +32,7 @@ class OrderExport implements FromCollection, WithHeadings
         $orders = Order::getOrder();
         foreach ($orders as &$order) {
             $string = '';
-            foreach ($order['order_details'] as $order_detail) {
+            foreach ($order[' '] as $order_detail) {
                 $product=Product::query()->select('name')->where('id',$order_detail['product_id'])->get()->toArray();
                 $name = $product[0]['name'];
 
