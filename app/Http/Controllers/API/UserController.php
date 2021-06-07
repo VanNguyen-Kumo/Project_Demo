@@ -51,8 +51,9 @@ class UserController extends Controller
         return response()->json($user);
     }
 
-    public function update(UpdateUserRequest $request, $id)
+    public function update(UpdateUserRequest $request)
     {
+        $id=\auth()->guard('user')->id();
         $file = $request->file('image_url');
         $name = $file->getClientOriginalName();
         $filebath = $name;
