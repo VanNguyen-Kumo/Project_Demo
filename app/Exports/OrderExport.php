@@ -32,20 +32,16 @@ class OrderExport implements FromCollection, WithHeadings
         $orders = Order::getOrder();
         foreach ($orders as &$order) {
             $string = '';
-            foreach ($order[' '] as $order_detail) {
-                $product=Product::query()->select('name')->where('id',$order_detail['product_id'])->get()->toArray();
-                $name = $product[0]['name'];
-
-                $quantity = $order_detail['quantity'];
-                $price=$order_detail['price'];
+            foreach ($order['products'] as $products) {
+                $name = $products['name'];
+                $quantity = $products['pivot']['quantity'];
+                $price=$products['pivot']['price'];
                 $name_quantity = 'Name product: ' . $name . ', ' . 'Quantity:' . $quantity.', Price: '.$price;
-                $string = $string .'-'. ' ' . $name_quantity;
-                $string=$string."\n";
+                $string = $string .'-'. ' ' . $name_quantity."\n";
             }
             $order['name_product'] = $string;
             $order['price']=$order['total_price'];
             $order['phone_user']=$order['phone'];
-
 
             $users = User::query()->select('display_name')->where('id', $order['user_id'])->get()->toArray();
             foreach ($users as $user) {
@@ -56,7 +52,6 @@ class OrderExport implements FromCollection, WithHeadings
             array_push($order);
             array_splice($order, 3, 4);
             array_splice($order, 2, 1);
-
         }
         return collect($orders);
     }

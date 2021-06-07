@@ -95,7 +95,7 @@ Route::group([
     'namespace' => 'API',
     'middleware' => 'auth:user',
 ], function () {
-    Route::get('show/{id}',[UserController::class,'show']);
+    Route::get('show',[UserController::class,'show']);
     Route::post('store', [UserController::class,'store']);
     Route::put('update/{id}',[UserController::class,'update']);
     Route::post('logout', [UserController::class,'logout']);
@@ -125,8 +125,9 @@ Route::group([
     Route::get('index',[OrderAdminController::class,'index']);
     Route::get('show/{id}',[OrderAdminController::class,'show']);
     Route::patch('update/{id}',[CategoryController::class,'update']);
-
-    Route::post('statistical',[OrderAdminController::class,'statistical']);
+    Route::get('exportCSV',[OrderAdminController::class,'exportCSV']);
+    Route::post('statistical',[OrderAdminController::class,'test']);
 
 });
-Route::get('exportCSV',[OrderAdminController::class,'exportCSV']);
+
+

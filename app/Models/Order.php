@@ -32,7 +32,7 @@ class Order extends Model
         return $this->belongsTo(User::class,'user_id');
     }
     public static function getOrder(){
-        $records=Order::with('order_details')->select('id','delivery_date','total_price','phone','user_id','status',)->where('status',OrderStatusType::Delivered())->get()->toArray();
+        $records=Order::with('products')->select('id','delivery_date','total_price','phone','user_id','status',)->where('status',OrderStatusType::Delivered())->get()->toArray();
         return $records;
     }
 
@@ -40,7 +40,7 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class);
     }
     public function products(){
-        return $this->belongsToMany(Product::class,'order_details','order_id','product_id');
+        return $this->belongsToMany(Product::class,'order_details','order_id','product_id')->withPivot('price','quantity');
     }
 
 }
