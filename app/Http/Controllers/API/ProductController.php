@@ -38,7 +38,7 @@ class ProductController extends Controller
     }
     public function show_data_category($id)
     {
-        $cates = Category::with('subcategory.products.images','products.images')->where('id', $id)->first();
+        $cates = Category::with(['subcategory.products.images','products.images'])->where('id', $id)->first();
         return response()->json([
             'data'=>$cates
         ]);
