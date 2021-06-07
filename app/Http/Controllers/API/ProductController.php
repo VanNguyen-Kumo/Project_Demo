@@ -33,8 +33,15 @@ class ProductController extends Controller
         return response()->json(['data'=>$product]);
     }
     public function data_category(){
-        $category=Category::whereNull('parent_category_id')->with('products.images')->orderBy('name')->get();
+        $category=Category::whereNull('parent_category_id')->with('subcategory.products.images')->orderBy('name')->get();
         return response()->json(['data_category'=>$category]);
+    }
+    public function show_data_category($id)
+    {
+        $cates = Category::with('subcategory.products.images')->where('id', $id)->first();
+        return response()->json([
+            'data'=>$cates
+        ]);
     }
     public function sub_category(){
         $category=Category::whereNotNull('parent_category_id')->with('products.images')->orderBy('name')->get();

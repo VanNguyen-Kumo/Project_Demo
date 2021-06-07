@@ -68,13 +68,7 @@ class CategoryController extends Controller
             'data'=>$cates
         ]);
     }
-    public function show_data_category($id)
-    {
-        $cates = Category::with('subcategory','subcategory.products','products.images')->where('id', $id)->first();
-        return response()->json([
-            'data'=>$cates
-        ]);
-    }
+
 
     public function update(UpdateCategoryRequest $request, $id)
     {
