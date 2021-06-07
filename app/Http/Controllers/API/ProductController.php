@@ -59,7 +59,8 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $products = Product::with('categories','images')->where('id', $id)->first();
+        $products = Product::with('categories','images')->where('id', $id)->get();
+
         foreach ($products as $product){
             if($product->categories->parent_category_id!==null){
                 $cate= Category::query()->select('name')->where('id',$product->categories->parent_category_id)->first();
