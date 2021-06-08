@@ -126,8 +126,8 @@ Route::group([
     Route::get('show/{id}',[OrderAdminController::class,'show']);
     Route::patch('update/{id}',[CategoryController::class,'update']);
     Route::get('exportCSV',[OrderAdminController::class,'exportCSV']);
-    Route::post('statistical',[OrderAdminController::class,'test']);
+    Route::post('statistical',[OrderAdminController::class,'statistical']);
 
 });
 
-
+Route::get('test',[OrderAdminController::class,'test']);
