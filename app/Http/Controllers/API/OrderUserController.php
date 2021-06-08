@@ -58,34 +58,7 @@ class OrderUserController extends Controller
 //        ];
         return response()->json(['data' => $order]);
     }
-    public function _test(CheckOutRequest $request)
-    {
-        $param = $request->validated();
-        $user_id = auth('user')->id();
-        $delivery_date = Carbon::now('Asia/Ho_Chi_Minh')->addDay(5)->toDayDateTimeString();
-        $param['user_id'] = $user_id;
-        $param['delivery_date'] = $delivery_date;
-        $order = Order::query()->create($param);
-        $this->update_address_phone($user_id,$param);
-        $detail=$request->input('order_detail');
 
-        foreach ($detail as $contents){
-            $order_detail=new OrderDetail();
-            $order_detail['quantity']=$contents['quantity'];
-            $order_detail['price']=$contents['price'];
-            $order_detail['order_id']=$order->id;
-            $order_detail['product_id']=$contents['product_id'];
-            $order_detail->save();
-            $this->update_quantity_product($contents['product_id'],$contents['quantity']);
-        }
-
-//        $user=User::query()->select('*')->where('id',$user_id)->first();
-//        $details = [
-//            'title' => 'Thank you for your trust and purchase from us',
-//            'body' => 'Orders will be sent to \n'.'Name: '.$user->first_name.' '.$user->last_name.'\n'.'Address'
-//        ];
-        return response()->json(['data' => $order]);
-    }
     public function cancel(UpdateOrderUserRequest $request, $id){
         $req=$request->validated();
         $req->status_id=OrderStatusType::Cancelled();
