@@ -130,4 +130,4 @@ Route::group([
 
 });
 
-Route::get('test',[OrderAdminController::class,'test']);
+Route::get('test',[OrderAdminController::class,'statistical']);
