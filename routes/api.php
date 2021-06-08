@@ -109,12 +109,11 @@ Route::group([
 ], function () {
     Route::get('index', [OrderUserController::class,'index']);
     Route::get('checkout',[OrderUserController::class,'checkout']);
-    Route::post('store',[OrderUserController::class,'store']);
     Route::post('cancel',[OrderUserController::class,'cancel']);
 
     Route::get('order/index',[OrderUserController::class,'index']);
     Route::get('checkout',[OrderUserController::class,'checkout']);
-    Route::post('order',[OrderUserController::class,'order']);
+    Route::post('order',[OrderUserController::class,'store']);
 });
 
 Route::group([
