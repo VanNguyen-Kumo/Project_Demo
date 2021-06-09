@@ -61,7 +61,7 @@ class OrderUserController extends Controller
 //    }
     public function store(Request $request)
     {
-        $detail=$request->input('checkoutForm');
+        $detail=$request->input('total_price');
         dd($detail);
         $order =new Order();
         $order->delivery_address=$request->file('address');
