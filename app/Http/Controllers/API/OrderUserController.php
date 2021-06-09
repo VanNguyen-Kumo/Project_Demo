@@ -67,12 +67,12 @@ class OrderUserController extends Controller
         $order_requests=$request->input('checkoutForm');
         foreach ($order_requests as $order_request){
             $order->total_price=$request->total_price;
-            $order->delivey_address=$order_request->address;
+            $order->delivey_address=$order_request['address'];
             $order->delivery_date=$delivery_date;
-            $order->phone=$order_request->phone;
+            $order->phone=$order_request['phone'];
             $order->user_id=$user_id;
             $order->save();
-            $this->update_address_phone($user_id,$order_request->phone);
+            $this->update_address_phone($user_id,$order_request['address'],$order_request['phone']);
         }
 
 
@@ -100,10 +100,10 @@ class OrderUserController extends Controller
         $order=Order::query()->where('id',$id)->update($req);
         return request()->json(['data'=>$order,'message'=>'Cancel done']);
     }
-    public function update_address_phone($user_id,$param){
+    public function update_address_phone($user_id,$address,$phone){
         $user = User::query()->find($user_id);
-        $user->address =$param['delivery_address'];
-        $user->phone=$param['phone'];
+        $user->address =$address;
+        $user->phone=$phone;
         $user->save();
     }
     public function update_quantity_product($content,$quantity){
