@@ -15,7 +15,7 @@ class Order extends Model
     protected $keyType = 'string';
     protected  $table= 'Orders';
     protected $fillable = [
-       'total_price','total_quantity','delivery_address','delivery_date','phone','status','user_id'
+       'total_price','delivery_address','delivery_date','phone','status','user_id'
     ];
     public static function boot()
     {
