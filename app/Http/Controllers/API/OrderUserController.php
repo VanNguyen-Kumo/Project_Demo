@@ -65,9 +65,9 @@ class OrderUserController extends Controller
         $delivery_date = Carbon::now('Asia/Ho_Chi_Minh')->addDay(5)->toDayDateTimeString();
 
         $order_requests=$request->input('checkoutForm');
+        $order =new Order();
         foreach ($order_requests as $order_request){
-            $order =new Order();
-            $order['total_price']=$request->total_price;
+            $order['total_price']=$request->input('total_price');
             $order['delivery_address']=$order_request['address'];
             $order['delivery_date']=$delivery_date;
             $order['phone']=$order_request['phone'];
@@ -82,7 +82,7 @@ class OrderUserController extends Controller
             $order_detail=new OrderDetail();
             $order_detail['quantity']=$contents['quantity_order'];
             $order_detail['price']=$contents['price'];
-            $order_detail['order_id']=$order->id;
+            $order_detail['order_id']=$order['id'];
             $order_detail['product_id']=$contents['product_id'];
             $order_detail->save();
             $this->update_quantity_product($contents['product_id'],$contents['quantity_order']);
