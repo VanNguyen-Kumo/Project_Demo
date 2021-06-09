@@ -12,7 +12,7 @@ use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 
 class OrderUserController extends Controller
