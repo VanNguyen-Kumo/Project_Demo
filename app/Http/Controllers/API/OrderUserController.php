@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
 
 
 class OrderUserController extends Controller
@@ -30,25 +31,56 @@ class OrderUserController extends Controller
         return response()->json(['data' => $user]);
     }
 
-    public function store(CheckOutRequest $request)
+//    public function store(CheckOutRequest $request)
+//    {
+//        $param = $request->validated();
+//         $user_id = auth('user')->id();
+//        $delivery_date = Carbon::now('Asia/Ho_Chi_Minh')->addDay(5)->toDayDateTimeString();
+//        $param['user_id'] = $user_id;
+//        $param['delivery_date'] = $delivery_date;
+//        $order = Order::query()->create($param);
+//        $this->update_address_phone($user_id,$param);
+//        $detail=$request->input('order_details');
+//
+//        foreach ($detail as $contents){
+//            $order_detail=new OrderDetail();
+//            $order_detail['quantity']=$contents['quantity_order'];
+//            $order_detail['price']=$contents['price'];
+//            $order_detail['order_id']=$order->id;
+//            $order_detail['product_id']=$contents['product_id'];
+//            $order_detail->save();
+//            $this->update_quantity_product($contents['product_id'],$contents['quantity_order']);
+//        }
+//
+////        $user=User::query()->select('*')->where('id',$user_id)->first();
+////        $details = [
+////            'title' => 'Thank you for your trust and purchase from us',
+////            'body' => 'Orders will be sent to \n'.'Name: '.$user->first_name.' '.$user->last_name.'\n'.'Address'
+////        ];
+//        return response()->json(['data' => $order]);
+//    }
+    public function store(Request $request)
     {
-        $param = $request->validated();
-         $user_id = auth('user')->id();
+        dd($request->file('address'));
+        $order =new Order();
+        $order->delivery_address=$request->file('address');
+        $order->total_price=$request->file('total_price');
+        $user_id = auth('user')->id();
         $delivery_date = Carbon::now('Asia/Ho_Chi_Minh')->addDay(5)->toDayDateTimeString();
         $param['user_id'] = $user_id;
         $param['delivery_date'] = $delivery_date;
         $order = Order::query()->create($param);
         $this->update_address_phone($user_id,$param);
-        $detail=$request->input('order_detail');
+        $detail=$request->input('order_details');
 
         foreach ($detail as $contents){
             $order_detail=new OrderDetail();
-            $order_detail['quantity']=$contents['quantity'];
+            $order_detail['quantity']=$contents['quantity_order'];
             $order_detail['price']=$contents['price'];
             $order_detail['order_id']=$order->id;
             $order_detail['product_id']=$contents['product_id'];
             $order_detail->save();
-            $this->update_quantity_product($contents['product_id'],$contents['quantity']);
+            $this->update_quantity_product($contents['product_id'],$contents['quantity_order']);
         }
 
 //        $user=User::query()->select('*')->where('id',$user_id)->first();
@@ -58,7 +90,6 @@ class OrderUserController extends Controller
 //        ];
         return response()->json(['data' => $order]);
     }
-
     public function cancel(UpdateOrderUserRequest $request, $id){
         $req=$request->validated();
         $req->status_id=OrderStatusType::Cancelled();

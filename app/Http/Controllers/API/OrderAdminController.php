@@ -7,7 +7,10 @@ use App\Exports\OrderExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderAdminRequest;
 use App\Models\Order;
+use App\Models\User;
 use Excel;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class OrderAdminController extends Controller
 {
@@ -38,32 +41,31 @@ class OrderAdminController extends Controller
 
     public function statistical()
     {
-        $order = [];
-        $count_quantity = [];
-        $statisticals = Order::with('order_details')->select('*')->where('status', OrderStatusType::Delivered())->get()->toArray();
-        foreach ($statisticals as $statistical) {
-            foreach ($statistical['order_details'] as $sta) {
-                array_push($order, $sta);
-            }
-        }
-        $count = count($order);
-        $temp = 0;
-        for ($i = 0; $i < $count; $i++) {
-            for ($j = $i + 1; $j < $count; $j++) {
-                if ($order[$i]['product_id'] === $order[$j]['product_id']) {
-                    $order[$i]['quantity'] += $order[$j]['quantity'];
-                    $order[$i]['price'] += $order[$j]['price'];
-                    array_push($count_quantity, $order[$i]);
-                    $temp = 1;
-                }
-            }
-//            if($temp===0){
-//          //      array_push($count_quantity, $order[$i]);
-//                echo $order[$i]['id']."\n";
-//            }
-        }
-        $test = $this->unique_multidim_array($order,'product_id');
-        sort($test);
+
+        $end_date = Carbon::now()->daysInMonth;
+        $month = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        $start = $year . '/' . $month . '/1';
+        $end = $year . '/' . $month . '/' . $end_date;
+        $order = DB::table('order_details')
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->join('products', 'products.id', '=', 'order_details.product_id')
+            ->join('users', 'users.id', '=', 'orders.user_id')
+            ->select('products.id as id', 'products.name as product_name',
+                DB::raw("sum(order_details.price)*(order_details.quantity) as price"),
+                DB::raw("order_details.quantity as quantity")
+                , 'users.display_name as display_name', 'orders.created_at as created_at',)
+            ->where('status', OrderStatusType::Delivered())
+            ->whereBetween('orders.created_at', [$start . ' 10:45:31', $end . ' 14:29:01'])
+            ->groupBy('order_details.quantity', 'name', 'display_name', 'orders.created_at')
+            ->get()->toArray();
+        $test = $this->unique_multidim_array($order, 'id');
+        $quantity = array_column($test, 'quantity');
+        array_multisort($quantity, SORT_DESC, $test);
+        $test = array_slice($test, 0, 10);
+        return response()->json([
+            'data' => $test
+        ]);
     }
 
     function unique_multidim_array($array, $key)
@@ -71,15 +73,44 @@ class OrderAdminController extends Controller
         $temp_array = array();
         $i = 0;
         $key_array = array();
-        foreach ($array as $val) {
-            if (!in_array($val[$key], $key_array, true)) {
-                $key_array[$i] = $val[$key];
+        foreach($array as $val) {
+            if (!in_array($val->$key, $key_array)) {
+                $key_array[$i] = $val->$key;
                 $temp_array[$i] = $val;
+            }else{
+                $j=$this->loop_index($array,$val->$key);
+                $display_name=$this->change($array,$val->id);
+                $temp_array[$j]->display_name=$display_name;
+                $temp_array[$j]->price+=$val->price;
+                $temp_array[$j]->quantity+=$val->quantity;
             }
             $i++;
         }
         return $temp_array;
     }
 
+    public function change($orders,$id)
+    {
+        $arr=new \stdClass();
+        foreach ($orders as $order) {
+            if ($order->id===$id){
+               $arr->display_name=$order->display_name;
+                $arr->quantity=$order->quantity;
+            }
+        }
+        $name = max($arr, 'quantity');
+        return $name->display_name;
+    }
+
+    public function loop_index($orders, $i)
+    {
+        $j = 0;
+        foreach ($orders as $order) {
+            if ($order->id === $i) {
+                return $j;
+            }
+            $j++;
+        }
+    }
 }
 
