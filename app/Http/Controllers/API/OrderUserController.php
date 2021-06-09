@@ -64,7 +64,7 @@ class OrderUserController extends Controller
         $user_id = auth('user')->id();
         $delivery_date = Carbon::now('Asia/Ho_Chi_Minh')->addDay(5)->toDayDateTimeString();
         $order =new Order();
-        $order_request=$request->file('checkoutForm');
+        $order_request=$request->input('checkoutForm');
         dd($order_request);
         $order->total_price=$request->total_price;
         $order->delivey_address=$order_request->address;
