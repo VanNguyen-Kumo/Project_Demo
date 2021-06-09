@@ -57,7 +57,7 @@ class OrderAdminController extends Controller
                 , 'users.display_name as display_name', 'orders.created_at as created_at',)
             ->where('status', OrderStatusType::Delivered())
             ->whereBetween('orders.created_at', [$start . ' 10:45:31', $end . ' 14:29:01'])
-            ->groupBy('order_details.quantity', 'name', 'display_name', 'orders.created_at')
+            ->groupBy('order_details.quantity', 'name', 'display_name', 'orders.created_at','products.id')
             ->get()->toArray();
         $test = $this->unique_multidim_array($order, 'id');
         $quantity = array_column($test, 'quantity');
