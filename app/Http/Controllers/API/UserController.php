@@ -79,8 +79,8 @@ class UserController extends Controller
     public function change_password(ChangePassRequest $request)
     {
         $id = \auth()->guard('user')->id();
-        $params = $request->validated();
-//        $params['password'] = bcrypt($params['password']);
+        $params = $request->only(['password']);
+       $params['password'] = bcrypt($params['password']);
         User::where('id', $id)->update($params);
         return response()->json([
             'message' => 'User update successfully',
