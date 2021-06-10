@@ -22,7 +22,7 @@ class OrderAdminController extends Controller
 
     public function show($id)
     {
-        $order = Order::query()->where('id', $id)->first();
+        $order = Order::with('products')->where('id', $id)->first();
         return response()->json(['data' => $order]);
     }
 
