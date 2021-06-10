@@ -123,7 +123,7 @@ Route::group([
 ], function () {
     Route::get('index',[OrderAdminController::class,'index']);
     Route::get('show/{id}',[OrderAdminController::class,'show']);
-    Route::patch('update/{id}',[CategoryController::class,'update']);
+    Route::patch('update/{id}',[OrderAdminController::class,'update']);
     Route::get('exportCSV',[OrderAdminController::class,'exportCSV']);
     Route::post('statistical',[OrderAdminController::class,'statistical']);
 
