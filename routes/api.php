@@ -15,6 +15,7 @@ use App\Http\Controllers\API\OrderAdminController;
 
 
 Route::post('admin/login', [API\AdminLoginControler::class,'login']);
+Route::post('admin/register', [AdminController::class,'store']);
 Route::post('home/user/login', [API\UserController::class,'login']);
 Route::post('home/user/register', [API\UserController::class,'store']);
 
@@ -26,7 +27,6 @@ Route::group([
     Route::post('logout', [AdminLoginControler::class,'logout']);
     Route::get('index',[AdminController::class,'index']);
     Route::get('show/{id}',[AdminController::class,'show']);
-    Route::post('store', [AdminController::class,'store']);
     Route::put('update/{id}',[AdminController::class,'update']);
     Route::delete('destroy/{id}', [AdminController::class,'destroy']);
 
