@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminLogin;
 use App\Http\Requests\ChangeAddressRequest;
 use App\Http\Requests\ChangePassRequest;
 use App\Http\Requests\UpdateImageRequest;
@@ -12,10 +11,7 @@ use App\Http\Requests\UserLogin;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Tymon\JWTAuth\Exceptions\JWTException;
-
 
 class UserController extends Controller
 {
