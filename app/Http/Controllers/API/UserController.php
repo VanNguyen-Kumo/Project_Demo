@@ -104,9 +104,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function destroy()
+    public function destroy($id)
     {
-        $id = \auth()->guard('user')->id();
         toast('Delete User Success', 'success', 'top-right');
         User::query()->where('id', $id)->delete();
         return response()->json('User delete successfully');
