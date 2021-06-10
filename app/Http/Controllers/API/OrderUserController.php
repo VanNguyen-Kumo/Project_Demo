@@ -19,14 +19,14 @@ class OrderUserController extends Controller
 {
     public function index()
     {
-        $id = request()->user('user')->id;
+        $id = \auth()->guard('user')->id();
         $order = Order::query()->select('*')->where('user_id', $id)->orderBy('created_at')->with('products')->get();
         return response()->json(['data' => $order]);
     }
 
     public function checkout()
     {
-        $id = request()->user('user')->id;
+        $id = \auth()->guard('user')->id();
         $user = User::query()->where('id', $id)->first();
         return response()->json(['data' => $user]);
     }
@@ -95,10 +95,10 @@ class OrderUserController extends Controller
 //        ];
         return response()->json(['data' => $order]);
     }
-    public function cancel(UpdateOrderUserRequest $request, $id){
-        $req=$request->validated();
-        $req->status_id=OrderStatusType::Cancelled();
-        $order=Order::query()->where('id',$id)->update($req);
+    public function cancel(Request $request,$order_id){
+        $id = \auth()->guard('user')->id();
+        $status_id=OrderStatusType::Cancelled();
+        $order=Order::query()->where('id',$order_id)->orWhere('id',$id)->update($status_id);
         return request()->json(['data'=>$order,'message'=>'Cancel done']);
     }
     public function update_address_phone($user_id,$address,$phone){

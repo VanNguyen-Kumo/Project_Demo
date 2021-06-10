@@ -110,7 +110,7 @@ Route::group([
     'middleware' => 'auth:user',
 ], function () {
     Route::get('index', [OrderUserController::class,'index']);
-    Route::post('cancel',[OrderUserController::class,'cancel']);
+    Route::post('cancel/{order_id}',[OrderUserController::class,'cancel']);
     Route::get('checkout',[OrderUserController::class,'checkout']);
     Route::post('order',[OrderUserController::class,'store']);
     Route::get('show',[OrderUserController::class,'show']);
@@ -123,7 +123,7 @@ Route::group([
 ], function () {
     Route::get('index',[OrderAdminController::class,'index']);
     Route::get('show/{id}',[OrderAdminController::class,'show']);
-    Route::patch('update/{id}',[OrderAdminController::class,'update']);
+    Route::patch('update/{order_id}',[OrderAdminController::class,'update']);
     Route::get('exportCSV',[OrderAdminController::class,'exportCSV']);
     Route::post('statistical',[OrderAdminController::class,'statistical']);
 

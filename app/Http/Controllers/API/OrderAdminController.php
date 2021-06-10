@@ -26,11 +26,11 @@ class OrderAdminController extends Controller
         return response()->json(['data' => $order]);
     }
 
-    public function update(UpdateOrderAdminRequest $request, $id)
+    public function update(UpdateOrderAdminRequest $request, $order_id)
     {
         $req = $request->only('status_id');
         $req->status_id = OrderStatusType::Cancelled();
-        $order = Order::query()->where('id', $id)->update($req);
+        $order = Order::query()->where('id', $order_id)->update($req);
         return response()->json(['message' => 'Update success']);
     }
 
