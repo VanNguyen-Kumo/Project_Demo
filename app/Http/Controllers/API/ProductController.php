@@ -14,6 +14,7 @@ use Excel;
 
 class ProductController extends Controller
 {
+
     public function index()
     {
         if (\request()->file('sort') === null) {
@@ -95,7 +96,7 @@ class ProductController extends Controller
 
     public function importCSV(Request $request)
     {
-        $path = $request->file('csv')->getRealPath();
+        $path = $request->file('csv');
         Excel::import(new ProductsImport(), $path);
         return response()->json(['message' => 'Import Product Success']);
     }
