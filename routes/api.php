@@ -110,7 +110,7 @@ Route::group([
     'middleware' => 'auth:user',
 ], function () {
     Route::get('index', [OrderUserController::class,'index']);
-    Route::put('cancel/{order_id}',[OrderUserController::class,'cancel']);
+    Route::patch('cancel/{order_id}',[OrderUserController::class,'cancel']);
     Route::get('checkout',[OrderUserController::class,'checkout']);
     Route::post('order',[OrderUserController::class,'store']);
     Route::get('show',[OrderUserController::class,'show']);

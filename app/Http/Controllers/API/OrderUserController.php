@@ -96,10 +96,23 @@ class OrderUserController extends Controller
         return response()->json(['data' => $order]);
     }
     public function cancel(Request $request,$order_id){
-        $id = \auth()->guard('user')->id();
-        $status_id=OrderStatusType::Cancelled();
-        $order=Order::query()->where('id',$order_id)->update($status_id->value);
-        return request()->json(['data'=>$order,'message'=>'Cancel done']);
+        $status=OrderStatusType::Cancelled()->value;
+        $orders=Order::with('products')->where('id',$order_id)->get()->toArray();
+        foreach ($orders as $order){
+           foreach ($order['products'] as $product){
+               $products=Product::query()->select('*')->where('id',$product['pivot']['product_id'])->get()->toArray();
+               foreach ($products as &$quantity){
+                  $quan= $quantity['quantity']+$product['pivot']['quantity'];
+                   Product::query()->where('id',$product['pivot']['product_id'])->update([
+                       'quantity'=>$quan
+                   ]);
+               }
+           }
+        }
+        $order=Order::query()->where('id',$order_id)->update([
+            'status'=>(string)$status
+        ]);
+       return response()->json(['message'=>'Cancel order success']);
     }
     public function update_address_phone($user_id,$address,$phone){
         $user = User::query()->find($user_id);
