@@ -117,6 +117,7 @@ Route::group([
     Route::get('order/index',[OrderUserController::class,'index']);
     Route::get('checkout',[OrderUserController::class,'checkout']);
     Route::post('order',[OrderUserController::class,'store']);
+    Route::get('show',[OrderUserController::class,'show']);
 });
 
 Route::group([
@@ -133,3 +134,5 @@ Route::group([
 });
 
 Route::get('test',[OrderAdminController::class,'statistical']);
+Route::get('show',[OrderUserController::class,'show']);
+Route::get('exportCSV',[OrderAdminController::class,'exportCSV']);

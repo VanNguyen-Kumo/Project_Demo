@@ -113,4 +113,34 @@ class OrderUserController extends Controller
         $product->quantity=$qty-$quantity;
         $product->save();
     }
+    public function show(){
+        $id = request()->user('user')->id;
+        $orders=Order::with('products')->select('id','delivery_date','total_price','phone','user_id','status',)->where('user_id',$id)->get()->toArray();
+        foreach ($orders as &$order) {
+            $string = '';
+            foreach ($order['products'] as $products) {
+                $name = $products['name'];
+                $quantity = $products['pivot']['quantity'];
+                $price=$products['pivot']['price'];
+                $name_quantity = 'Name product: ' . $name . ', ' . 'Quantity:' . $quantity.', Price: '.$price;
+                $string = $string .'-'. ' ' . $name_quantity."\n";
+            }
+            $order['name_product'] = $string;
+            $order['price']=$order['total_price'];
+            $order['phone_user']=$order['phone'];
+
+            $users = User::query()->select('display_name')->where('id', $order['user_id'])->get()->toArray();
+            foreach ($users as $user) {
+                $order['user'] = $user['display_name'];
+                array_push($order);
+            }
+            $order['status_id']=OrderStatusType::Delivered()->key;
+            array_push($order);
+            array_splice($order, 3, 4);
+            array_splice($order, 2, 1);
+        }
+        return response()->json([
+            'data'=>$orders
+        ]);
+    }
 }
