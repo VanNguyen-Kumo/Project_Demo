@@ -98,8 +98,7 @@ class OrderUserController extends Controller
     public function cancel(Request $request,$order_id){
         $id = \auth()->guard('user')->id();
         $status_id=OrderStatusType::Cancelled();
-        dd($status_id->value);
-        $order=Order::query()->where('id',$order_id)->update($status_id);
+        $order=Order::query()->where('id',$order_id)->update($status_id->value);
         return request()->json(['data'=>$order,'message'=>'Cancel done']);
     }
     public function update_address_phone($user_id,$address,$phone){
