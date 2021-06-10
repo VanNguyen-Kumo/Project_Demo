@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\Request;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['store']]);
+    }
     public function index()
     {
-
         $admin = Admin::query()->where('username', 'LIKE', '%' . request('keyword') . '%')->get();
         return  response()->json(['data'=>$admin,'message'=>'Login success']);
     }

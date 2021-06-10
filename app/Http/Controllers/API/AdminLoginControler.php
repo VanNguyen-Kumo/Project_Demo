@@ -13,16 +13,6 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 class AdminLoginControler extends Controller
 {
 
-    public function register(Request $request){
-        $admin=Admin::create([
-            'username' => $request['username'],
-            'password' => bcrypt($request['password']),
-        ]);
-        return response()->json([
-            'message'=> 'Admin register successfully',
-            'data'=>$admin
-        ]);
-    }
     public function login(AdminLogin $request){
         $param = $request->only(['username', 'password']);
         $token = null;

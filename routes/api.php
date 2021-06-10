@@ -102,7 +102,6 @@ Route::group([
     Route::put('change_password',[UserController::class,'change_password']);
     Route::put('update_image',[UserController::class,'update_image']);
     Route::post('logout', [UserController::class,'logout']);
-    Route::get('checkout',[OrderUserController::class,'checkout']);
 });
 
 Route::group([
@@ -111,10 +110,7 @@ Route::group([
     'middleware' => 'auth:user',
 ], function () {
     Route::get('index', [OrderUserController::class,'index']);
-    Route::get('checkout',[OrderUserController::class,'checkout']);
     Route::post('cancel',[OrderUserController::class,'cancel']);
-
-    Route::get('order/index',[OrderUserController::class,'index']);
     Route::get('checkout',[OrderUserController::class,'checkout']);
     Route::post('order',[OrderUserController::class,'store']);
     Route::get('show',[OrderUserController::class,'show']);
