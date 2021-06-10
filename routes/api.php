@@ -98,6 +98,9 @@ Route::group([
     Route::get('show',[UserController::class,'show']);
     Route::post('store', [UserController::class,'store']);
     Route::put('update',[UserController::class,'update']);
+    Route::put('change_address',[UserController::class,'change_address']);
+    Route::put('change_password',[UserController::class,'change_password']);
+    Route::put('update_image',[UserController::class,'update_image']);
     Route::post('logout', [UserController::class,'logout']);
     Route::get('checkout',[OrderUserController::class,'checkout']);
 });
