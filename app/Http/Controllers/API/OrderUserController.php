@@ -96,23 +96,27 @@ class OrderUserController extends Controller
         return response()->json(['data' => $order]);
     }
     public function cancel(Request $request,$order_id){
-        $status=OrderStatusType::Cancelled()->value;
-        $orders=Order::with('products')->where('id',$order_id)->get()->toArray();
-        foreach ($orders as $order){
-           foreach ($order['products'] as $product){
-               $products=Product::query()->select('*')->where('id',$product['pivot']['product_id'])->get()->toArray();
-               foreach ($products as &$quantity){
-                  $quan= $quantity['quantity']+$product['pivot']['quantity'];
-                   Product::query()->where('id',$product['pivot']['product_id'])->update([
-                       'quantity'=>$quan
-                   ]);
-               }
-           }
+        $check=Order::query()->where('id',$order_id)->first();
+        if ($check->status==="0"){
+            $status=OrderStatusType::Cancelled()->value;
+            $orders=Order::with('products')->where('id',$order_id)->get()->toArray();
+            foreach ($orders as $order){
+                foreach ($order['products'] as $product){
+                    $products=Product::query()->select('*')->where('id',$product['pivot']['product_id'])->get()->toArray();
+                    foreach ($products as &$quantity){
+                        $quan= $quantity['quantity']+$product['pivot']['quantity'];
+                        Product::query()->where('id',$product['pivot']['product_id'])->update([
+                            'quantity'=>$quan
+                        ]);
+                    }
+                }
+            }
+            $order=Order::query()->where('id',$order_id)->update([
+                'status'=>(string)$status
+            ]);
+            return response()->json(['message'=>'Cancel order successfully']);
         }
-        $order=Order::query()->where('id',$order_id)->update([
-            'status'=>(string)$status
-        ]);
-       return response()->json(['message'=>'Cancel order success']);
+            return response()->json(['message'=>"Can't cancel order"]);
     }
     public function update_address_phone($user_id,$address,$phone){
         $user = User::query()->find($user_id);
