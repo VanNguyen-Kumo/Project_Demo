@@ -90,9 +90,9 @@ class OrderUserController extends Controller
         $product->quantity=$qty-$quantity;
         $product->save();
     }
-    public function show(){
+    public function show($order_id){
         $id = \auth()->guard('user')->id();
-        $orders=Order::with('products')->where('user_id',$id)->get()->toArray();
+        $orders=Order::with('products')->where('user_id',$id)->orWhere('id',$order_id)->get()->toArray();
         return response()->json([
             'data'=>$orders
         ]);

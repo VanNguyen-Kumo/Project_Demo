@@ -113,7 +113,7 @@ Route::group([
     Route::patch('cancel/{order_id}',[OrderUserController::class,'cancel']);
     Route::get('checkout',[OrderUserController::class,'checkout']);
     Route::post('order',[OrderUserController::class,'store']);
-    Route::get('show',[OrderUserController::class,'show']);
+    Route::get('show/{order_id}',[OrderUserController::class,'show']);
 });
 
 Route::group([
