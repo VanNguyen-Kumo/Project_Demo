@@ -72,10 +72,9 @@ class OrderUserController extends Controller
             $order['delivery_date']=$delivery_date;
             $order['phone']=$order_request['phone'];
             $order['user_id']=$user_id;
-            $order->save();
             $this->update_address_phone($user_id,$order_request['address'],$order_request['phone']);
+            $order->save();
         }
-
 
         $detail=$request->input('itemsInCart');
         foreach ($detail as $contents){
