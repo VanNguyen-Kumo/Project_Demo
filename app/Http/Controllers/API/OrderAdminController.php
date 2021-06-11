@@ -30,6 +30,7 @@ class OrderAdminController extends Controller
     public function update(UpdateOrderAdminRequest $request, $order_id)
     {
         $status=Order::query()->where('id',$order_id)->first();
+        dd($status->status);
         if ($request->status === (string)OrderStatusType::WaitingForTheGoods()->value) {
             Order::query()->where('id', $order_id)->update([
                 'status' => $request->status
