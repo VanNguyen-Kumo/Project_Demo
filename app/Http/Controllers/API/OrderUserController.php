@@ -92,7 +92,7 @@ class OrderUserController extends Controller
     }
     public function show($order_id){
         $id = \auth()->guard('user')->id();
-        $orders=Order::with('products')->where('user_id',$id)->orWhere('id',$order_id)->get()->toArray();
+        $orders=Order::with('products')->where('id',$order_id)->orWhere('id',$id)->get()->toArray();
         return response()->json([
             'data'=>$orders
         ]);

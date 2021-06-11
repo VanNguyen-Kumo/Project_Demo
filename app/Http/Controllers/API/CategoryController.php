@@ -84,11 +84,6 @@ class CategoryController extends Controller
             'data' => $params
         ]);
     }
-//    public function patch($id){
-//        $cate=Category::where('parent_category_id',$id)->first();
-//        $cate->parent_category_id=0;
-//        $cate->save();
-//    }
     public function destroy($id)
     {
         Category::query()->where('id', $id)->delete();
