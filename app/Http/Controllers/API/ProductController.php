@@ -58,10 +58,15 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $req = $request->validated();
-        $product = Product::query()->create($req);
+        if($req['quantity']>0){
+            $product = Product::query()->create($req);
+            return response()->json([
+                'data' => $product,
+                'message' => 'Create product success'
+            ]);
+        }
         return response()->json([
-            'data' => $product,
-            'message' => 'Create product success'
+            'message' => 'Can create product. Check quantity'
         ]);
     }
 

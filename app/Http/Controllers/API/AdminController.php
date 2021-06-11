@@ -47,7 +47,6 @@ class AdminController extends Controller
 
     public function destroy($id)
     {
-
         Admin::query()->where('id',$id)->delete();
         return response()->json( ['message'=>'Admin delete successfully']);
     }

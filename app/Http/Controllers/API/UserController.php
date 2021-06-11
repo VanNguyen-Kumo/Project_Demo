@@ -138,7 +138,7 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        auth('web')->logout(true);
+        auth('web')->logout();
         return response()->json(['message' => 'Logout success']);
     }
 }
