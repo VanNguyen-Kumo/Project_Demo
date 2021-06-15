@@ -76,9 +76,6 @@ class OrderAdminController extends Controller
             ->whereBetween('orders.created_at', [$start . ' 10:45:31', $end . ' 14:29:01'])
             ->groupBy('order_details.quantity', 'name', 'display_name', 'orders.created_at', 'products.id')
             ->get()->toArray();
-        foreach ($order as $o){
-            dd($o->price);
-        }
         $test = $this->unique_multidim_array($order, 'id');
         $quantity = array_column($test, 'quantity');
         array_multisort($quantity, SORT_DESC, $test);
