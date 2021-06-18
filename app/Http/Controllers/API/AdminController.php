@@ -39,7 +39,7 @@ class AdminController extends Controller
         $params = $request->validated();
         $params['password'] = bcrypt($params['password']);
         Admin::where('id',$id)->update($params);
-        $admin=Admin::where('id',$id)->get();
+        $admin=Admin::query()->select('*')->where('id',$id)->get();
         return response()->json( [
             'message'=> 'Admin update successfully',
             'data'=>$admin
