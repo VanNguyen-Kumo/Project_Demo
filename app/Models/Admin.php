@@ -13,8 +13,8 @@ class Admin extends Authenticatable implements JWTSubject
     protected $keyType = 'string';
     protected  $table= 'admins';
     protected $casts = [
-        'created_at' => 'datetime:Y-m-d h:i:s',
-        'updated_at'=>'datetime:Y-m-d H:i:s',
+        'created_at' => 'date:Y-m-d',
+        'updated_at'=>'date:Y-m-d',
     ];
     protected $fillable = [
         'username',
