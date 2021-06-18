@@ -12,7 +12,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admin = Admin::query()->where('username', 'LIKE', '%' . request('keyword') . '%')->orderBy('updated_at','DESC')->get();
+        $admin = Admin::query()->where('username', 'LIKE', '%' . request('keyword') . '%')->orderBy('updated_at','DESC')->paginate(config('constants.paginate'));;
         return  response()->json(['data'=>$admin,'message'=>'Login success']);
     }
 
@@ -39,10 +39,9 @@ class AdminController extends Controller
         $params = $request->validated();
         $params['password'] = bcrypt($params['password']);
         Admin::where('id',$id)->update($params);
-        $admin=Admin::query()->select('*')->where('id',$id)->get();
         return response()->json( [
             'message'=> 'Admin update successfully',
-            'data'=>$admin
+            'data'=>$params
         ]);
     }
 
