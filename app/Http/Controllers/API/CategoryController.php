@@ -14,6 +14,7 @@ class CategoryController extends Controller
 
     public function index()
     {
+
         $cates = Category::whereNull('parent_category_id')
             ->with(['subcategory' => function ($category) {
                 return $category->withCount(['subcategory', 'products'])

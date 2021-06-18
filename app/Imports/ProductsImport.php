@@ -2,6 +2,8 @@
 
 namespace App\Imports;
 
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +17,9 @@ class ProductsImport implements ToModel,WithHeadingRow
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+    public function check(UpdateProductRequest $request){
+
+    }
     public function model(array $row)
     {
         $name=Category::query()->where('name',$row['category'])->first();
@@ -30,7 +35,6 @@ class ProductsImport implements ToModel,WithHeadingRow
                 'category_id'=>$cate['id'],
             ]);
         }else{
-
             return new Product([
                 'name'=>$row['name'],
                 'price'=>$row['price'],

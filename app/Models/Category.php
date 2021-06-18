@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Webpatser\Uuid\Uuid;
 
 class Category extends Model
@@ -14,7 +16,7 @@ class Category extends Model
 
     protected  $table= 'categories';
     protected $fillable = [
-        'name','image_url','is_active','parent_category_id',
+        'name','image_url','is_active','parent_category_id'
     ];
     public static function boot()
     {
