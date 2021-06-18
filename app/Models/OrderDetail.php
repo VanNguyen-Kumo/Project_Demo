@@ -9,7 +9,6 @@ use Webpatser\Uuid\Uuid;
 class OrderDetail extends Model
 {
     use HasFactory;
-    public $timestamps=false;
     public $incrementing = false;
     protected $keyType = 'string';
     protected  $table= 'order_details';

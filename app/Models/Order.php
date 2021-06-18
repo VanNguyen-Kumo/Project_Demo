@@ -11,7 +11,6 @@ use Webpatser\Uuid\Uuid;
 class Order extends Model
 {
     use HasFactory;
-    public $timestamps=false;
     public $incrementing = false;
     protected $keyType = 'string';
     protected  $table= 'orders';

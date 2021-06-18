@@ -9,7 +9,6 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class Admin extends Authenticatable implements JWTSubject
 {
     use HasFactory;
-    public $timestamps=false;
     public $incrementing = false;
     protected $keyType = 'string';
     protected  $table= 'admins';
