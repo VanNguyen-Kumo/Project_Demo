@@ -10,6 +10,7 @@ use Webpatser\Uuid\Uuid;
 class Product extends Model
 {
     use HasFactory;
+    public $timestamps=false;
     public $incrementing = false;
     protected $keyType = 'string';
 

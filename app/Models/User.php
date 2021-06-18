@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
-
+    public $timestamps=false;
     public $incrementing = false;
     protected $keyType = 'string';
     protected $table = 'users';

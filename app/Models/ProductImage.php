@@ -9,6 +9,7 @@ use Webpatser\Uuid\Uuid;
 class ProductImage extends Model
 {
     use HasFactory;
+    public $timestamps=false;
     public $incrementing = false;
     protected $keyType = 'string';
     protected  $table= 'product_images';

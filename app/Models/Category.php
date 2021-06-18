@@ -10,6 +10,7 @@ use Webpatser\Uuid\Uuid;
 
 class Category extends Model
 {
+ 
     use HasFactory;
     public $timestamps=false;
     public $incrementing = false;
