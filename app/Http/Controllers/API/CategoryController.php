@@ -21,7 +21,7 @@ class CategoryController extends Controller
                     ->with('subcategory.products');
             }])->with('products')
             ->withCount(['subcategory', 'products'])->orderBy('name', 'asc')
-            ->where('name', 'LIKE', '%' . request('keyword') . '%')->get();
+            ->where('name', 'LIKE', '%' . request('keyword') . '%')->paginate(config('constants.paginate'));
         foreach ($cates as $cate) {
             if ($cate['subcategory_count'] > 0) {
                 $count = 0;

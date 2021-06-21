@@ -12,6 +12,7 @@ class Admin extends Authenticatable implements JWTSubject
     public $incrementing = false;
     protected $keyType = 'string';
     protected  $table= 'admins';
+    protected $dates=['is_active'];
     protected $casts = [
         'created_at' => 'date:Y-m-d',
         'updated_at'=>'date:Y-m-d',
